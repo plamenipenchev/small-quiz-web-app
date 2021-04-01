@@ -1,0 +1,19 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
+
+button.btn-submit {
+  width: 100%;
+  background-color: blueviolet;
+}
+.center-element {
+  /* display: block; */
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  object-fit: cover;
+  object-position: bottom;
+}
+input.ng-invalid.ng-dirty {
+  border-bottom-color: #e91e63 !important ;
+  box-shadow: #e91e63 !important ;
+}

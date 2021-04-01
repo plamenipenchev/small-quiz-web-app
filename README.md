@@ -1,28 +1,32 @@
-# QuizWebApp
+# Quiz Web Application
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.2.2.
+## Table of contents
+* [General info](#general-info)
+* [Technologies](#technologies)
+* [Functionalities](#functionalities)
+* [Setup](#setup)
 
-## Development server
+## General info
+This is a simple Quiz Game. The user has the possibility to select quiz categories and difficulty. Then, questions with multiple answer options are displayed on the screen.
+The user selects the answer that he thinks is correct and immediately understands whether he gave a correct or incorrect answer (if it is correct the selected answer is colored green otherwise it becomes red). If the user does not give an answer within 15 seconds, the question is automatically marked as wrongly responsible.
+The last screen displays information about the number of wrong and the number of correct answers given during the game.
+	
+## Technologies
+Project is created with:
+* npm version:         6.14.6
+* Angular version:     11.2.4
+* Typescript version :  4.1.5
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## Functionalities
+* GET QUESTIONS - API https://opentdb.com/api_config.php 
+* TIMER - ngx-countdown (additional npm library)
+* ANSWERS BACKGROUND COLOR  - angular attribute directives
 
-## Code scaffolding
+	
+## Setup
+To run this project, download project folder quiz-web-app, in command prompt/terminal run:
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
-"# small-quiz-web-app" 
+```
+$ cd ../quiz-web-app
+$ ng serve
+```

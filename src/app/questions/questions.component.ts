@@ -31,7 +31,7 @@ export class QuestionsComponent implements OnInit {
       });
       this.questions = questionsData.results;
     });
-    //Initialize timer, notify property to trigger event 
+    //Initialize timer, notify property to trigger event
     this.timer = { leftTime: '15', notify: [1] };
   }
 

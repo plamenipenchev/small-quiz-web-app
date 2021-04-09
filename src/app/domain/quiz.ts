@@ -10,13 +10,13 @@ export class Quiz {
     let result: string = '';
     switch (this.category) {
       case "11":
-        result = 'Films'
+        result = 'Entertainment: Film'
         break;
       case '12':
-        result = 'Music'
+        result = 'Entertainment: Music'
         break;
       case '18':
-        result = 'Computers'
+        result = 'Science: Computers'
         break;
       case '21':
         result = 'Sports'

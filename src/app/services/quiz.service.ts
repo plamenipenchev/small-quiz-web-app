@@ -4,15 +4,13 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class QuizService {
-
   quiz: any;
   questions: any;
 
-
-  constructor(private httpClient: HttpClient, private route: Router) { }
+  constructor(private httpClient: HttpClient, private route: Router) {}
 
   // create quiz object
   createQuiz(initializeForm: any) {
@@ -21,10 +19,17 @@ export class QuizService {
     this.quiz.difficulty = initializeForm.controls['difficulty'].value;
   }
 
-  // call API in order to retrieve questions based on category and difficulty 
+  // //call API in order to retrieve questions based on category and difficulty
+  // get_questions() {
+  //   return this.httpClient.get(
+  //     `https://opentdb.com/api.php?amount=5&category=${this.quiz.category}&difficulty=${this.quiz.difficulty}&type=multiple`
+  //   );
+  // }
+
+  // server with mongo db
   get_questions() {
     return this.httpClient.get(
-      `https://opentdb.com/api.php?amount=5&category=${this.quiz.category}&difficulty=${this.quiz.difficulty}&type=multiple`
+      `http://localhost:3000/questions/5/${this.quiz.get_category()}/${this.quiz.difficulty}`
     );
   }
 
@@ -36,13 +41,12 @@ export class QuizService {
 
     answersLsTmp.splice(answerIndex, 0, apiQuestion.correct_answer);
     answersLsTmp = answersLsTmp.map((answerOption: string) => {
-
       answerOption === apiQuestion.correct_answer
         ? (correct = true)
         : (correct = false);
       return {
         answerOption: this.format_text(answerOption),
-        correct,
+        correct
       };
     });
 
@@ -56,13 +60,14 @@ export class QuizService {
   format_text(text: string) {
     let textFormated: string = '';
 
-    textFormated = text.replace(/&amp;/g, '&')
+    textFormated = text
+      .replace(/&amp;/g, '&')
       .replace(/&lt;/g, '<')
       .replace(/&gt;/g, '>')
       .replace(/&quot;/g, '"')
       .replace(/&#039;/g, "'");
 
-    return textFormated
+    return textFormated;
   }
 
   // start new Quiz Game

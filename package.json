@@ -7,7 +7,8 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "tsc --noEmit && eslint . --ext js,ts,json --quiet --fix",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "start.server": "nodemon server.js"
   },
   "private": true,
   "dependencies": {
@@ -23,11 +24,16 @@
     "@angular/platform-browser-dynamic": "~11.2.3",
     "@angular/router": "~11.2.3",
     "@ng-bootstrap/ng-bootstrap": "^9.0.2",
+    "body-parser": "^1.19.0",
     "bootstrap": "^3.4.1",
+    "express": "^4.17.1",
     "jquery": "^3.6.0",
     "materialize-css": "^1.0.0-rc.2",
+    "mongodb": "^3.6.5",
+    "mongoose": "^5.12.3",
     "ngb-modal": "^2.0.3",
     "ngx-countdown": "^11.0.3",
+    "nodemon": "^2.0.7",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.11.3"

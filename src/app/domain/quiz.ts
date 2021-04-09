@@ -22,7 +22,7 @@ export class Quiz {
         result = 'Sports'
         break;
       case "23":
-        result = 'Hystory'
+        result = 'History'
         break;
       default:
         result = 'None'

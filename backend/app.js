@@ -1,11 +1,12 @@
 const express = require('express');
 const Question = require('./models/question')
 const mongoose = require('mongoose');
+require('dotenv').config();
 
 const app = express();
 
 // DB connection
-mongoose.connect('mongodb+srv://ppenchev:025043@cluster0.7hxf4.mongodb.net/quiz?retryWrites=true&w=majority',
+mongoose.connect(`mongodb+srv://${process.env.USER}:${process.env.PASS}${process.env.CLUSTER}/${process.env.DB_NAME}?retryWrites=true&w=majority`,
   { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
     console.log('CONNECTED TO MONGO DB!');

@@ -19,6 +19,7 @@ Project is created with:
 
 ## Functionalities
 * GET QUESTIONS - API https://opentdb.com/api_config.php 
+* GET QUESTIONS - node js server with mongo db
 * TIMER - ngx-countdown (additional npm library)
 * ANSWERS BACKGROUND COLOR  - angular attribute directives
 

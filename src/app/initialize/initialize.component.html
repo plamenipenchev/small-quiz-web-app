@@ -18,56 +18,25 @@
           </div>
           <div class="row">
             <div class="col s6">
-              <p>
-                <label>
-                  <input class="with-gap" name="categories" value="11" type="radio" ngModel required />
-                  <span>Films</span>
-                </label>
-              </p>
-              <p>
-                <label>
-                  <input class="with-gap" name="categories" value="12" type="radio" ngModel required />
-                  <span>Music</span>
-                </label>
-              </p>
-              <p>
-                <label>
-                  <input class="with-gap" name="categories" value="23" type="radio" ngModel required />
-                  <span>History</span>
-                </label>
-              </p>
-              <p>
-                <label>
-                  <input class="with-gap" name="categories" value="21" type="radio" ngModel required />
-                  <span>Sports</span>
-                </label>
-              </p>
-              <p>
-                <label>
-                  <input class="with-gap" name="categories" value="18" type="radio" ngModel required />
-                  <span>Computers</span>
-                </label>
-              </p>
+              <div *ngFor="let category of categories">
+                <p>
+                  <label>
+                    <input type="radio" class="with-gap" name="categories" value={{category.idntfr}} ngModel required />
+                    <span>{{category.display}}</span>
+                  </label>
+                </p>
+              </div>
             </div>
             <div class="col s6">
-              <p>
-                <label>
-                  <input class="with-gap" name="difficulty" value="easy" type="radio" ngModel required />
-                  <span>Easy</span>
-                </label>
-              </p>
-              <p>
-                <label>
-                  <input class="with-gap" name="difficulty" value="medium" type="radio" ngModel required />
-                  <span>Medium</span>
-                </label>
-              </p>
-              <p>
-                <label>
-                  <input class="with-gap" name="difficulty" value="hard" type="radio" ngModel required />
-                  <span>Hard</span>
-                </label>
-              </p>
+              <div *ngFor="let difficulty of difficulties">
+                <p>
+                  <label>
+                    <input type="radio" class="with-gap" name="difficulty" value={{difficulty.idntfr}} ngModel
+                      required />
+                    <span>{{difficulty.display}}</span>
+                  </label>
+                </p>
+              </div>
             </div>
           </div>
           <div class="row">

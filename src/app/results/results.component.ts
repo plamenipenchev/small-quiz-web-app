@@ -6,26 +6,27 @@ import { QuizService } from './../services/quiz.service';
   templateUrl: './results.component.html',
   styleUrls: ['./results.component.css']
 })
-
 export class ResultsComponent implements OnInit {
-  correctAnswers: number = 0;
-  notCorrectAnswers: number = 0;
-  category: string = '';
-  difficulty: string = '';
+  correctAnswers = 0;
 
-  constructor(private quizService: QuizService) { }
+  notCorrectAnswers = 0;
 
-  // display Quiz statistic 
+  category = '';
+
+  difficulty = '';
+
+  constructor(private quizService: QuizService) {}
+
+  // display Quiz statistic
   ngOnInit(): void {
     this.correctAnswers = this.quizService.quiz.numberCorrectAnswers;
     this.notCorrectAnswers = this.quizService.quiz.numberNotCorrectAnswers;
-    this.category = this.quizService.quiz.get_category();
-    this.difficulty = this.quizService.quiz.get_difficulty();
+    this.category = this.quizService.quiz.category;
+    this.difficulty = this.quizService.quiz.difficulty;
   }
 
   // start new Quiz Game
   startNewQuiz() {
     this.quizService.startNewQuiz();
   }
-
 }

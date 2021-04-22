@@ -3,14 +3,14 @@ import {
   ElementRef,
   HostListener,
   Renderer2,
-  Input,
+  Input
 } from '@angular/core';
 
 @Directive({
-  selector: '[appAnswerBackground]',
+  selector: '[appAnswerBackground]'
 })
 export class AnswerBackgroundDirective {
-  @Input() correctAnswer: boolean = false;
+  @Input() correctAnswer = false;
 
   constructor(private elRef: ElementRef, private renderer: Renderer2) {}
 

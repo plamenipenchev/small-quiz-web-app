@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
+
 const mongoose = require('mongoose');
 
 const questionSchema = mongoose.Schema({
@@ -9,4 +11,4 @@ const questionSchema = mongoose.Schema({
   incorrect_answers: Array
 });
 
-module.exports = mongoose.model('Question', questionSchema);
+module.exports = mongoose.model('Questions', questionSchema);

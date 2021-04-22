@@ -1,17 +1,13 @@
 // @ts-check
 // Protractor configuration file, see link for more information
 // https://github.com/angular/protractor/blob/master/lib/config.ts
+/* eslint-disable */
 
-const { SpecReporter, StacktraceOption } = require('jasmine-spec-reporter');
+import { SpecReporter, StacktraceOption } from 'jasmine-spec-reporter';
 
-/**
- * @type { import("protractor").Config }
- */
-exports.config = {
+export const config = {
   allScriptsTimeout: 11000,
-  specs: [
-    './src/**/*.e2e-spec.ts'
-  ],
+  specs: ['./src/**/*.e2e-spec.ts'],
   capabilities: {
     browserName: 'chrome'
   },
@@ -22,16 +18,21 @@ exports.config = {
   jasmineNodeOpts: {
     showColors: true,
     defaultTimeoutInterval: 30000,
-    print: function() {}
+    print: function () {}
   },
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   onPrepare() {
     require('ts-node').register({
       project: require('path').join(__dirname, './tsconfig.json')
     });
-    jasmine.getEnv().addReporter(new SpecReporter({
-      spec: {
-        displayStacktrace: StacktraceOption.PRETTY
-      }
-    }));
+    // eslint-disable-next-line no-undef
+    jasmine.getEnv().addReporter(
+      // @ts-ignore
+      new SpecReporter({
+        spec: {
+          displayStacktrace: StacktraceOption.PRETTY
+        }
+      })
+    );
   }
 };

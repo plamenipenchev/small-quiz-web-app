@@ -7,15 +7,15 @@ import { Router } from '@angular/router';
 export class NavigationService {
   constructor(private route: Router) {}
 
-  navigateInitialize(): void {
+  navigateToInitialize(): void {
     this.route.navigate(['/initialize']);
   }
 
-  navigateQuestions(): void {
+  navigateToQuestions(): void {
     this.route.navigate(['/questions']);
   }
 
-  navigateResults(): void {
+  navigateToResults(): void {
     this.route.navigate(['/results']);
   }
 }

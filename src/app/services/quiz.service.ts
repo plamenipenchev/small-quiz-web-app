@@ -1,5 +1,5 @@
+import { Observable, BehaviorSubject } from 'rxjs';
 /* eslint-disable no-param-reassign */
-import { Quiz } from './../domain/quiz';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { URLS } from './../././../assets/config';
@@ -9,40 +9,76 @@ import { NavigationService } from './../services/navigation.service';
   providedIn: 'root'
 })
 export class QuizService {
-  quiz: any;
+  public editDataDetails: any = [];
 
-  questions: any;
+  private observer = new BehaviorSubject(this.editDataDetails);
+
+  currentGameId = this.observer.asObservable();
 
   constructor(
     private httpClient: HttpClient,
     private navigateService: NavigationService
   ) {}
 
-  // create quiz object
-  createQuiz(category: number, difficulty: number): void {
-    this.quiz = new Quiz(category, difficulty);
+  // set quiz id
+  emitQuizId(quizId: string): void {
+    this.observer.next(quizId);
   }
 
-  // // call API in order to retrieve questions based on category and difficulty
-  // getQuestions() {
-  //   return this.httpClient.get(
-  //     `https://opentdb.com/api.php?amount=5&category=${this.quiz.category}&difficulty=${this.quiz.difficulty}&type=multiple`
-  //   );
-  // }
+  // create quiz object
+  createQuiz(category: number, difficulty: number): Observable<unknown> {
+    return this.httpClient.post(`${URLS.localHost}${URLS.games}`, {
+      category,
+      difficulty
+    });
+  }
+
+  // upate quiz object
+  updateQuiz(
+    id: string,
+    status: string,
+    numberCorrectAnswers: number,
+    numberNotCorrectAnswers: number,
+    questionsAnswersLs: Array<unknown>
+  ): Observable<unknown> {
+    return this.httpClient.patch(`${URLS.localHost}${URLS.games}/${id}`, {
+      status,
+      numberCorrectAnswers,
+      numberNotCorrectAnswers,
+      questionsAnswersLs
+    });
+  }
+
+  // get current game
+  getQuiz(quizId: string): Observable<unknown> {
+    return this.httpClient.get(`${URLS.localHost}${URLS.games}/${quizId}`);
+  }
 
   // server with mongo db
-  getQuestions() {
+  getQuestions(quiz: any): Observable<unknown> {
     return this.httpClient.get(
-      `${URLS.localHost}${URLS.questions}${this.quiz.category}/${this.quiz.difficulty}`
+      `${URLS.localHost}${URLS.questions}${quiz.game.category}/${quiz.game.difficulty}`
     );
   }
 
-  getCategories() {
+  // Get all categories to initialize the quiz
+  getCategoriesList(): Observable<unknown> {
     return this.httpClient.get(`${URLS.localHost}${URLS.categories}`);
   }
 
-  getDifficulties() {
+  // Get all difficulties to initialize the quiz
+  getDifficultiesList(): Observable<unknown> {
     return this.httpClient.get(`${URLS.localHost}${URLS.difficulties}`);
+  }
+
+  // Get category by category id
+  getCategory(id: number): Observable<unknown> {
+    return this.httpClient.get(`${URLS.localHost}${URLS.categories}/${id}`);
+  }
+
+  // Get difficulty by difficulty id
+  getDifficulty(id: number): Observable<unknown> {
+    return this.httpClient.get(`${URLS.localHost}${URLS.difficulties}/${id}`);
   }
 
   // mark answers options with true and false, later use it in background directive.
@@ -86,6 +122,6 @@ export class QuizService {
 
   // start new Quiz Game
   startNewQuiz(): void {
-    this.navigateService.navigateInitialize();
+    this.navigateService.navigateToInitialize();
   }
 }

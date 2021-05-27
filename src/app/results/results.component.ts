@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { QuizService } from './../services/quiz.service';
+// import { mergeMap, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-results',
@@ -15,18 +16,33 @@ export class ResultsComponent implements OnInit {
 
   difficulty = '';
 
+  quizO = '';
+
   constructor(private quizService: QuizService) {}
 
   // display Quiz statistic
   ngOnInit(): void {
-    this.correctAnswers = this.quizService.quiz.numberCorrectAnswers;
-    this.notCorrectAnswers = this.quizService.quiz.numberNotCorrectAnswers;
-    this.category = this.quizService.quiz.category;
-    this.difficulty = this.quizService.quiz.difficulty;
+    this.quizService.currentGameId.subscribe((id: any) => {
+      this.quizO = id;
+      this.quizService.getQuiz(id).subscribe((quiz: any) => {
+        this.correctAnswers = quiz.game.numberCorrectAnswers;
+        this.notCorrectAnswers = quiz.game.numberNotCorrectAnswers;
+        this.quizService
+          .getCategory(quiz.game.category)
+          .subscribe((categoryObj: any) => {
+            this.category = categoryObj.results[0].display;
+          });
+        this.quizService
+          .getDifficulty(quiz.game.difficulty)
+          .subscribe((difficultyObj: any) => {
+            this.difficulty = difficultyObj.results[0].display;
+          });
+      });
+    });
   }
 
   // start new Quiz Game
-  startNewQuiz() {
+  startNewQuiz(): void {
     this.quizService.startNewQuiz();
   }
 }

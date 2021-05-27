@@ -4,7 +4,6 @@ import { NavigationService } from './../services/navigation.service';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from './../confirmation-dialog/confirmation-dialog.component';
-import { Quiz } from '../domain/quiz';
 
 @Component({
   selector: 'app-questions',
@@ -12,8 +11,6 @@ import { Quiz } from '../domain/quiz';
   styleUrls: ['./questions.component.css']
 })
 export class QuestionsComponent implements OnInit {
-  quiz: Quiz | undefined;
-
   questions: any = [];
 
   currentQuestion = 0;
@@ -21,6 +18,16 @@ export class QuestionsComponent implements OnInit {
   timer: any = { leftTime: '15' };
 
   timerLeft = 30;
+
+  quizId = '';
+
+  quizStatus = 'pending';
+
+  numberCorrectAnswers = 0;
+
+  numberNotCorrectAnswers = 0;
+
+  questionsAnswersLs: Array<unknown> = [];
 
   constructor(
     private quizService: QuizService,
@@ -30,14 +37,32 @@ export class QuestionsComponent implements OnInit {
 
   // load questions
   ngOnInit(): void {
-    this.quizService.getQuestions().subscribe((questionsData: any) => {
-      questionsData.results.map((apiQuestion: any) => {
-        this.quizService.formatQuestions(apiQuestion);
+    this.quizService.currentGameId.subscribe((id: any) => {
+      this.quizService.getQuiz(id).subscribe((result) => {
+        this.quizId = id;
+        this.quizService
+          .getQuestions(result)
+          .subscribe((questionsData: any) => {
+            questionsData.results.map((apiQuestion: any) => {
+              this.quizService.formatQuestions(apiQuestion);
+              return apiQuestion;
+            });
+            this.questions = questionsData.results;
+          });
+        // Initialize timer, notify property to trigger event
+        this.timer = { leftTime: '15', notify: [1] };
       });
-      this.questions = questionsData.results;
     });
-    // Initialize timer, notify property to trigger event
-    this.timer = { leftTime: '15', notify: [1] };
+
+    // this.quizService.getQuestions(quiz).subscribe((questionsData: any) => {
+    //   questionsData.results.map((apiQuestion: any) => {
+    //     this.quizService.formatQuestions(apiQuestion);
+    //     return apiQuestion;
+    //   });
+    //   this.questions = questionsData.results;
+    // });
+    // // Initialize timer, notify property to trigger event
+    // this.timer = { leftTime: '15', notify: [1] };
   }
 
   // treat question answer
@@ -45,25 +70,39 @@ export class QuestionsComponent implements OnInit {
     if (event.type === 'change' || event.action === 'notify') {
       setTimeout(() => {
         if (this.currentQuestion === this.questions.length - 1) {
-          this.quizService.quiz.status = 'completed';
-          this.navigateService.navigateResults();
+          this.quizStatus = 'completed';
+          this.quizService.emitQuizId(this.quizId);
+          this.navigateService.navigateToResults();
         }
 
-        this.currentQuestion++;
         this.timer = { leftTime: '15', notify: [1] };
 
         // eslint-disable-next-line no-unused-expressions
         answer.correct
-          ? this.quizService.quiz.numberCorrectAnswers++
-          : this.quizService.quiz.numberNotCorrectAnswers++;
+          ? this.numberCorrectAnswers++
+          : this.numberNotCorrectAnswers++;
 
         const obj = {
           question: question.question,
-          answer: answer.answer_option,
+          answer: answer.answerOption,
           correct: answer.correct,
           category: question.category
         };
-        this.quizService.quiz.questionsAnswersLs.push(obj);
+
+        this.questionsAnswersLs.push(obj);
+
+        this.quizService
+          .updateQuiz(
+            this.quizId,
+            this.quizStatus,
+            this.numberCorrectAnswers,
+            this.numberNotCorrectAnswers,
+            this.questionsAnswersLs
+          )
+          .subscribe((result) => {
+            console.log(result);
+          });
+        this.currentQuestion++;
       }, 500);
     }
   }

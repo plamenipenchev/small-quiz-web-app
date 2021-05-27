@@ -13,7 +13,7 @@
             (event)="onAnswer(questions[currentQuestion], {answer_option:'time is up', correct:false}, $event)">
           </countdown>
         </p>
-        <h4 class="center-align">{{ questions[currentQuestion].question }}</h4>
+        <h4 class="center-align">{{ questions[currentQuestion].question}}</h4>
 
         <ul class="list-group" *ngFor="let answer of questions[currentQuestion].answers">
           <label>

@@ -1,6 +1,7 @@
 export const URLS = Object({
   localHost: 'http://localhost:3000',
-  questions: '/questions/5/',
-  categories: '/categories',
-  difficulties: '/difficulties'
+  questions: '/api/questions/5/',
+  categories: '/api/categories',
+  difficulties: '/api/difficulties',
+  games: '/api/games'
 });

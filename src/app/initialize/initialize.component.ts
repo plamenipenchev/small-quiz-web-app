@@ -15,20 +15,23 @@ export class InitializeComponent implements OnInit {
 
   difficulties: any = [];
 
+  quizId = '';
+
   constructor(
     private quizService: QuizService,
-    // private route: Router,
     private navigateService: NavigationService
   ) {}
 
   ngOnInit(): void {
-    this.quizService.getCategories().subscribe((categoriesData: any) => {
+    this.quizService.getCategoriesList().subscribe((categoriesData: any) => {
       this.categories = categoriesData.results;
     });
 
-    this.quizService.getDifficulties().subscribe((difficultiesData: any) => {
-      this.difficulties = difficultiesData.results;
-    });
+    this.quizService
+      .getDifficultiesList()
+      .subscribe((difficultiesData: any) => {
+        this.difficulties = difficultiesData.results;
+      });
   }
 
   // submit form results
@@ -43,8 +46,10 @@ export class InitializeComponent implements OnInit {
 
     const difficulty = form.controls.difficulty.value;
 
-    this.quizService.createQuiz(category, difficulty);
+    this.quizService.createQuiz(category, difficulty).subscribe((game: any) => {
+      this.quizService.emitQuizId(game.quizId);
+    });
 
-    this.navigateService.navigateQuestions();
+    this.navigateService.navigateToQuestions();
   }
 }
